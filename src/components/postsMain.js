@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  fetchPosts
-} from '../actions/posts'
+// import {
+//   fetchPosts
+// } from '../actions/posts'
+
+import { fetchPosts } from '../actions/postAction'
 
 class PostsMain extends Component {
   componentDidMount () {
@@ -11,6 +13,9 @@ class PostsMain extends Component {
 
   render() {
 
+    console.log(this.props)
+
+    //const { posts } = this.props;
     const { loading, posts, error } = this.props;
 
     if ( loading ) {
@@ -18,7 +23,7 @@ class PostsMain extends Component {
     }
 
     if ( error ) {
-      return <div><h1>ERROR</h1>{ error }</div>
+      return <div><h1>ERROR</h1>{ error.message }</div>
     }
 
     return (
@@ -30,9 +35,7 @@ class PostsMain extends Component {
 }
 
 const mapStateToProps = ( state ) => ({
-  loading: state.posts.loading,
-  posts: state.posts.posts,
-  error: state.posts.error
+  posts: state//state.posts
 });
 
 export default connect( mapStateToProps )(PostsMain);

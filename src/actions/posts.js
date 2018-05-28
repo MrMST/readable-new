@@ -12,7 +12,7 @@ export const fetchPostsStart = () => ({
 
 export const fetchPostsSuccess = posts => ({
   type: FETCH_POSTS_SUCCESS,
-  payload:  posts
+  payload: { posts }
 });
 
 export const fetchPostsError = error => ({
@@ -24,7 +24,7 @@ export function fetchPosts () {
   return dispatch => {
     dispatch( fetchPostsStart() );
     return fetch( `${API}/posts` , { headers: { Authorization: "whatever-you-want" } })
-      .then( checkForErrors )
+      //.then( checkForErrors )
       .then( res => res.json() )
       .then( json => {
         dispatch( fetchPostsSuccess( json.posts ) );
