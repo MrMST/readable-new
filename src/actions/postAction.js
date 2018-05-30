@@ -13,14 +13,9 @@ export const fetchPosts = () => dispatch =>
   postApi
     .getAllPosts().then(posts =>
       Promise.all( posts.map(post =>
-        postApi
-          .fetchCommentsByPostId(post.id)
-          .then(comments => (post.comments = comments))
-          .then(() => post)
-        )
-      )
-    )
-    .then(posts => dispatch(fetchPostsSuccess(posts)));
+        postApi.fetchCommentsByPostId(post.id).then(comments => (post.comments = comments)).then(() => post)
+      )))
+    .then(posts => dispatch(fetchPostsSuccess( posts )));
 
 export const sendPostVote = ( postId, option ) => dispatch =>
   postApi.postVote( postId, option ).then(post => dispatch(votePost( post )));
@@ -53,10 +48,18 @@ export const addPost = ( post ) => ({
   post
 });
 
-export const fetchCategoriesSuccess = categories => ({
+export const fetchCategoriesSuccess = ( categories ) => ({
   type: types.FETCH_CATEGORIES,
   categories
 });
 
 export const fetchCategories = () => dispatch =>
   postApi.getAllCategories().then(categories => dispatch(fetchCategoriesSuccess( categories )));
+
+export const getPostSuccess = ( posts ) => ({
+  type: types.FETCH_POST,
+  posts
+});
+
+export const getPost = ( postId ) => dispatch =>
+  postApi.getPost( postId ).then(posts => dispatch(getPostSuccess( posts )));

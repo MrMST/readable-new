@@ -25,6 +25,12 @@ export default function posts( state = initialState.posts, action ) {
       );
       return remainingPosts
 
+    case types.FETCH_POST:
+      return {
+        ...state,
+        posts: [action.posts]
+      };
+
     default:
         return state;
   }

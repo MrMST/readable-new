@@ -49,6 +49,12 @@ class PostApi {
      .then(res => res.json())
      .then(data => data.categories);
   };
+
+  static getPost = ( postId ) => {
+    return fetch(`${API}/posts/${postId}`, { headers: { Authorization: "whatever-you-want" }})
+      .then(res => res.json())
+      .catch(error => { return error });
+  };
 }
 
 export default PostApi;

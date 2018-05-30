@@ -35,37 +35,37 @@ class PostsMain extends Component {
       <div className='post-list-wrapper'>
         <button onClick={ () => this.changeSorting('votescore') }>VoteScore</button>
         <button onClick={ () => this.changeSorting('timestamp') }>Timestamp</button>
-
-         <Link to="/addpost"><button>Add Post</button></Link>
-
-      <ul>
-        { posts && posts.length &&
-          posts.filter(post => !post.deleted)
-          .sort((a, b) => {
-            switch (sort) {
-              case "timestamp":
-                return b.timestamp - a.timestamp;
-              default:
-                return b.voteScore - a.voteScore;
-            }
-          })
-          .map( post => (
-          <li key = { post.id }>
-            <div className='post-wrapper'>
-              <div>Title: { post.title }</div>
-              <div><Timestamp time={ post.timestamp / 1000 } format='full' /></div>
-              <div>Author: { post.author }</div>
-              <div>Comments: { post.commentCount }</div>
-              <div>
-                <button onClick={ () => this.votePostUp( post.id ) }>Up</button>
-                CurrentScore: { post.voteScore }
-                <button onClick={ () => this.votePostDown( post.id ) }>Down</button>
+        <Link to="/addpost"><button>Add Post</button></Link>
+        <ul>
+          { posts && posts.length &&
+            posts.filter(post => !post.deleted)
+            .sort(( a, b ) => {
+              switch ( sort ) {
+                case "timestamp":
+                  return b.timestamp - a.timestamp;
+                default:
+                  return b.voteScore - a.voteScore;
+              }
+            })
+            .map( post => (
+            <li key = { post.id }>
+              <div className='post-wrapper'>
+                <div>Category: { post.category }</div>
+                <div>Title: <Link to={`/show/${post.id}`}>{ post.title }</Link></div>
+                <div><Timestamp time={ post.timestamp / 1000 } format='full' /></div>
+                <div>Author: { post.author }</div>
+                <div>Comments: { post.commentCount }</div>
+                <div>
+                  <button onClick={ () => this.votePostUp( post.id ) }>Up</button>
+                  CurrentScore: { post.voteScore }
+                  <button onClick={ () => this.votePostDown( post.id ) }>Down</button>
+                </div>
+                <div><button onClick={ () => this.deletePost( post.id ) }>Remove Post</button></div>
+                <div><Link to={`/editpost/${post.id}`}><button>Edit Post</button></Link></div>
               </div>
-              <div><button onClick={ () => this.deletePost(post.id) }>Remove Post</button></div>
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }
