@@ -29,13 +29,13 @@ class PostApi {
     }).catch(error => { return error });
   }
 
-  static deletePost = ( postId ) => {
+  static deletePost ( postId ) {
     return fetch(`${API}/posts/${postId}`, { method: "DELETE", headers: { Authorization: "whatever-you-want" }})
       .then(res => res)
       .catch(error => { return error });
   };
 
-  static addPost = post => {
+  static addPost ( post ) {
     return fetch(`${API}/posts`, { method: "POST", headers: {
         Authorization: "whatever-you-want",
         "Content-Type": "application/json"

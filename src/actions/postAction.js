@@ -1,4 +1,5 @@
 import * as types from '../constants/action-types';
+// import * as postApi from '../api/postAPI';
 import postApi from '../api/postAPI';
 
 export const fetchPostsSuccess =  ( posts ) => {

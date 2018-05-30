@@ -20,13 +20,10 @@ export default function posts( state = initialState.posts, action ) {
       return posts;
 
     case types.DELETE_POST:
-      const remainingPosts = state.posts.filter(
+      const remainingPosts = state.filter(
         item => item.id !== action.postId
       );
-      return {
-        ...state,
-        posts: remainingPosts
-      };
+      return remainingPosts
 
     default:
         return state;

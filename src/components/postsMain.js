@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from "react-router-dom"
+import Timestamp from "react-timestamp"
 
-import { fetchPosts, sendPostVote, changeSortAction } from '../actions/postAction'
+import { fetchPosts, sendPostVote, changeSortAction, sendDeletePost } from '../actions/postAction'
 
 class PostsMain extends Component {
   componentDidMount () {
@@ -52,6 +53,7 @@ class PostsMain extends Component {
           <li key = { post.id }>
             <div className='post-wrapper'>
               <div>Title: { post.title }</div>
+              <div><Timestamp time={ post.timestamp / 1000 } format='full' /></div>
               <div>Author: { post.author }</div>
               <div>Comments: { post.commentCount }</div>
               <div>
@@ -74,4 +76,4 @@ const mapStateToProps = ( state ) => ({
   sort: state.sort
 });
 
-export default connect( mapStateToProps, { fetchPosts, sendPostVote, changeSortAction} )( PostsMain );
+export default connect( mapStateToProps, { fetchPosts, sendPostVote, changeSortAction, sendDeletePost} )( PostsMain );

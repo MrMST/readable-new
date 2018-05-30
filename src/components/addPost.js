@@ -21,7 +21,7 @@ class AddPost extends Component {
     event.preventDefault()
     const values = serializeForm(event.target, { hash: true })
     this.props.sendAddPost(values);
-    this.props.history.push("/");
+    this.props.history.push('/');
   }
 
   render() {
