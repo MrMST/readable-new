@@ -24,6 +24,10 @@ const defaultData = {
       {
         name: 'test2',
         path: 'test2'
+      },
+      {
+        name: 'schnickschnack',
+        path: 'schnickachnack'
       }
   ]
 }

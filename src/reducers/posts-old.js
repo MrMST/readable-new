@@ -1,8 +1,4 @@
-import {
-  FETCH_POSTS_START,
-  FETCH_POSTS_SUCCESS,
-  FETCH_POSTS_ERROR
-} from '../constants/action-types'
+import * as types from '../constants/action-types'
 
 const initialState = {
   posts: [],
@@ -20,7 +16,7 @@ const postReducer = (state = initialState, action) => {
       error: null
     };
 
-    case FETCH_POSTS_SUCCESS:
+    case FETCH_POSTS:
     console.log('reducer: ' + action.payload)
     return {
       ...state,

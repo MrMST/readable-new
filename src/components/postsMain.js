@@ -1,41 +1,77 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-// import {
-//   fetchPosts
-// } from '../actions/posts'
+import { Link } from "react-router-dom"
 
-import { fetchPosts } from '../actions/postAction'
+import { fetchPosts, sendPostVote, changeSortAction } from '../actions/postAction'
 
 class PostsMain extends Component {
   componentDidMount () {
-    this.props.dispatch( fetchPosts() );
+    this.props.fetchPosts();
   }
+
+  votePostUp = (postId) => {
+    this.props.sendPostVote(postId, "upVote");
+  };
+
+  votePostDown = (postId) => {
+    this.props.sendPostVote(postId, "downVote");
+  };
+
+  changeSorting = value => {
+    this.props.changeSortAction({ value });
+  }
+
+  deletePost = postId => {
+    this.props.sendDeletePost(postId);
+  };
 
   render() {
 
-    console.log(this.props)
-
-    //const { posts } = this.props;
-    const { loading, posts, error } = this.props;
-
-    if ( loading ) {
-      return <div><h1>Loading</h1></div>
-    }
-
-    if ( error ) {
-      return <div><h1>ERROR</h1>{ error.message }</div>
-    }
+    const { posts } = this.props;
+    const { sort } = this.props
 
     return (
+      <div className='post-list-wrapper'>
+        <button onClick={ () => this.changeSorting('votescore') }>VoteScore</button>
+        <button onClick={ () => this.changeSorting('timestamp') }>Timestamp</button>
+
+         <Link to="/addpost"><button>Add Post</button></Link>
+
       <ul>
-        {/* { posts.map( post => <li key='post.id'>{ post.name }</li>) } */}
+        { posts && posts.length &&
+          posts.filter(post => !post.deleted)
+          .sort((a, b) => {
+            switch (sort) {
+              case "timestamp":
+                return b.timestamp - a.timestamp;
+              default:
+                return b.voteScore - a.voteScore;
+            }
+          })
+          .map( post => (
+          <li key = { post.id }>
+            <div className='post-wrapper'>
+              <div>Title: { post.title }</div>
+              <div>Author: { post.author }</div>
+              <div>Comments: { post.commentCount }</div>
+              <div>
+                <button onClick={ () => this.votePostUp( post.id ) }>Up</button>
+                CurrentScore: { post.voteScore }
+                <button onClick={ () => this.votePostDown( post.id ) }>Down</button>
+              </div>
+              <div><button onClick={ () => this.deletePost(post.id) }>Remove Post</button></div>
+            </div>
+          </li>
+        ))}
       </ul>
+      </div>
     );
   }
 }
 
 const mapStateToProps = ( state ) => ({
-  posts: state//state.posts
+  posts: state.posts,
+  sort: state.sort
 });
 
-export default connect( mapStateToProps )(PostsMain);
+export default connect( mapStateToProps, { fetchPosts, sendPostVote, changeSortAction} )( PostsMain );
