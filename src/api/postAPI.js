@@ -30,7 +30,7 @@ class PostApi {
 
   static deletePost ( postId ) {
     return fetch(`${API}/posts/${postId}`, { method: "DELETE", headers: { Authorization: "whatever-you-want" }})
-      .then(res => res)
+      .then(response => response)
       .catch(error => { return error });
   };
 
@@ -45,7 +45,7 @@ class PostApi {
 
   static getAllCategories = () => {
     return fetch(`${API}/categories`, { headers: { Authorization: "whatever-you-want" }})
-     .then(res => res.json())
+     .then(response => response.json())
      .then(data => data.categories);
   };
 
