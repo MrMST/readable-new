@@ -1,15 +1,16 @@
 import * as types from '../constants/action-types'
 
 const initialState = {
-  categories: []
+  comments: []
 };
 
-export default function categories( state = initialState.categories, action ) {
+export default function comments( state = initialState.comments, action ) {
+
   switch (action.type) {
-    case types.GET_CATEGORIES:
+    case types.GET_COMMENTS:
       return {
         ...state,
-        categories: action.categories
+        comments: action.comments
       };
 
     default:

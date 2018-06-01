@@ -1,21 +1,21 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import { Link } from "react-router-dom"
-import { editPost, getPost, fetchCategories } from "../actions/postAction"
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { updatePost, getPost, getCategories } from '../actions/postAction'
 
 class EditPost extends Component {
   state = {
-    id: "",
-    category: "",
-    title: "",
-    author: "",
-    body: ""
+    id: '',
+    category: '',
+    title: '',
+    author: '',
+    body: ''
   };
 
   componentDidMount() {
-    const { postId } = this.props.match.params;
-    this.props.fetchCategories();
-    this.props.getPost( postId ).then(() => {
+    const { post_id } = this.props.match.params;
+    this.props.getCategories();
+    this.props.getPost( post_id ).then(() => {
       const {
         id,
         title,
@@ -58,19 +58,17 @@ class EditPost extends Component {
       author: author,
       category: category
     };
-    this.props.editPost(data, data.id);
-    this.props.history.push("/");
+    this.props.updatePost(data, data.id);
+    this.props.history.push('/');
   };
 
   render() {
-
-    console.log(this.props)
 
     const { posts } = this.props.posts;
     const { categories} = this.props.categories
 
     return (
-      <div className="wrapper">
+      <div className='wrapper'>
         {
           posts && posts.length && Object.keys(posts[0]).length && !posts[0].error ? (<div>
             {
@@ -80,7 +78,7 @@ class EditPost extends Component {
                     <form onSubmit={ this.handleSubmit }>
                     <label>
                         Select a category:
-                        <select name="category" value={this.state.category} onChange={this.setCategory}>
+                        <select name='category' value={this.state.category} onChange={this.setCategory}>
                         { categories && categories.length && categories.map( category => (
                             <option key={ category.name } value={ category.name }>{ category.name }</option>
                         ))}
@@ -94,7 +92,7 @@ class EditPost extends Component {
                 </div>
               ))
             }
-            </div>) : (<div>Post not found! 404 <Link to={"/"} key="back">Back</Link></div>)
+            </div>) : (<div>Post not found! 404 <Link to={'/'} key='back'>Back</Link></div>)
         }
       </div>
     );
@@ -106,4 +104,4 @@ const mapStateToProps = ({ posts, categories }) => ({
   categories
 });
 
-export default connect(mapStateToProps, { editPost, getPost, fetchCategories })( EditPost );
+export default connect(mapStateToProps, { updatePost, getPost, getCategories })( EditPost );

@@ -3,26 +3,26 @@ import { connect } from 'react-redux'
 import { Link } from "react-router-dom"
 import Timestamp from "react-timestamp"
 
-import { fetchPosts, postVote, changeSortAction, deletePost } from '../actions/postAction'
+import { getPosts, postVote, changeSortAction, deletePost } from '../actions/postAction'
 
 class PostsMain extends Component {
   componentDidMount () {
-    this.props.fetchPosts();
+    this.props.getPosts();
   }
 
   votePostUp = (postId) => {
-    this.props.postVote(postId, "upVote");
+    this.props.postVote(postId, 'upVote');
   };
 
   votePostDown = (postId) => {
-    this.props.postVote(postId, "downVote");
+    this.props.postVote(postId, 'downVote');
   };
 
-  changeSorting = value => {
+  changeSorting = ( value ) => {
     this.props.changeSortAction({ value });
   }
 
-  deletePost = postId => {
+  deletePost = ( postId ) => {
     this.props.deletePost(postId);
   };
 
@@ -76,4 +76,4 @@ const mapStateToProps = ( state ) => ({
   sort: state.sort
 });
 
-export default connect( mapStateToProps, { fetchPosts, postVote, changeSortAction, deletePost} )( PostsMain );
+export default connect( mapStateToProps, { getPosts, postVote, changeSortAction, deletePost} )( PostsMain );

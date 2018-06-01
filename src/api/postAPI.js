@@ -8,7 +8,7 @@ class PostApi {
     }).catch(error => { return error });
   }
 
-  static fetchCommentsByPostId ( postId ) {
+  static getCommentsByPostId ( postId ) {
     return fetch( `${API}/posts/${postId}/comments`, { headers: { Authorization: "whatever-you-want" } })
       .then( response => {
         return response.json()
@@ -51,7 +51,7 @@ class PostApi {
 
   static getPost = ( postId ) => {
     return fetch(`${API}/posts/${postId}`, { headers: { Authorization: "whatever-you-want" }})
-      .then(res => res.json())
+      .then(response => response.json())
       .catch(error => { return error });
   };
 
@@ -62,6 +62,11 @@ class PostApi {
       },
       body: JSON.stringify(post)
     }).then(data => data.json());
+  };
+
+  static getComments = ( postId ) => {
+    return fetch(`${API}/posts/${postId}/comments`, { headers: { Authorization: "whatever-you-want" }})
+    .then(response => response.json().then(data => data));
   };
 }
 
