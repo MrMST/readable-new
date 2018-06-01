@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { sendAddPost, fetchCategories } from '../actions/postAction'
+import { addPost, fetchCategories } from '../actions/postAction'
 import uuidv1 from 'uuid/v1'
 import serializeForm from 'form-serialize'
 
@@ -20,12 +20,12 @@ class AddPost extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
     const values = serializeForm(event.target, { hash: true })
-    this.props.sendAddPost(values);
+    this.props.addPost(values);
     this.props.history.push('/');
   }
 
   render() {
-    const { categories} = this.props.categories
+    const { categories } = this.props.categories
     return (
       <div className="wrapper">
         <div>Add Post</div>
@@ -56,4 +56,4 @@ const mapStateToProps = ({ categories }) => ({
   categories
 });
 
-export default connect(mapStateToProps, { sendAddPost, fetchCategories })( AddPost );
+export default connect(mapStateToProps, { addPost, fetchCategories })( AddPost );

@@ -17,13 +17,13 @@ export const fetchPosts = () => dispatch =>
       )))
     .then(posts => dispatch(fetchPostsSuccess( posts )));
 
-export const sendPostVote = ( postId, option ) => dispatch =>
-  postApi.postVote( postId, option ).then(post => dispatch(votePost( post )));
-
-export const votePost = post => ({
+export const votePostSuccess = post => ({
   type: types.VOTE_POST,
   payload: post
 });
+
+export const postVote = ( postId, option ) => dispatch =>
+  postApi.postVote( postId, option ).then(post => dispatch(votePostSuccess( post )));
 
 export const changeSortAction = sort => {
   return {
@@ -32,21 +32,21 @@ export const changeSortAction = sort => {
   };
 };
 
-export const sendDeletePost = ( postId ) => dispatch =>
-  postApi.deletePost( postId ).then(post => dispatch(deletePost( postId )));
-
-export const deletePost = ( postId ) => ({
+export const deletePostSuccess = ( postId ) => ({
   type: types.DELETE_POST,
   postId
 });
 
-export const sendAddPost = ( post ) => dispatch =>
-  postApi.addPost( post ).then(post => dispatch(addPost( post )));
+export const deletePost = ( postId ) => dispatch =>
+  postApi.deletePost( postId ).then(post => dispatch(deletePostSuccess( postId )));
 
-export const addPost = ( post ) => ({
+export const addPostSuccess = ( post ) => ({
   type: types.ADD_POST,
   post
 });
+
+export const addPost = ( post ) => dispatch =>
+  postApi.addPost( post ).then(post => dispatch(addPostSuccess( post )));
 
 export const fetchCategoriesSuccess = ( categories ) => ({
   type: types.FETCH_CATEGORIES,
@@ -63,3 +63,12 @@ export const getPostSuccess = ( posts ) => ({
 
 export const getPost = ( postId ) => dispatch =>
   postApi.getPost( postId ).then(posts => dispatch(getPostSuccess( posts )));
+
+export const editPostSuccess = ( post, postId ) => ({
+  type: types.UPDATE_POST,
+  post,
+  postId
+});
+
+export const editPost = ( post, postId ) => dispatch =>
+  postApi.editPost( post, postId ).then(post => dispatch(editPostSuccess( post )));

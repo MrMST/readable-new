@@ -1,7 +1,6 @@
 const API = "http://localhost:3001";
 
 class PostApi {
-
   static getAllPosts() {
     return fetch( `${API}/posts` , { headers: { Authorization: "whatever-you-want" } })
       .then( response => {
@@ -54,6 +53,15 @@ class PostApi {
     return fetch(`${API}/posts/${postId}`, { headers: { Authorization: "whatever-you-want" }})
       .then(res => res.json())
       .catch(error => { return error });
+  };
+
+  static editPost = ( post, postId ) => {
+    return fetch(`${API}/posts/${postId}`, { method: "PUT", headers: {
+        Authorization: "whatever-you-want",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(post)
+    }).then(data => data.json());
   };
 }
 

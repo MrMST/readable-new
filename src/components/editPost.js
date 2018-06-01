@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
-import { /*sendEditPost,*/ getPost, fetchCategories } from "../actions/postAction"
+import { editPost, getPost, fetchCategories } from "../actions/postAction"
 
 class EditPost extends Component {
   state = {
@@ -16,7 +16,14 @@ class EditPost extends Component {
     const { postId } = this.props.match.params;
     this.props.fetchCategories();
     this.props.getPost( postId ).then(() => {
-      const { id, title, author, body, category } = this.props.posts.posts[0];
+      const {
+        id,
+        title,
+        author,
+        body,
+        category
+      } = this.props.posts.posts[0];
+
       this.setState({
         id: id,
         title: title,
@@ -31,7 +38,7 @@ class EditPost extends Component {
     this.setState({ category: event.target.value });
   }
 
-  handleInputChange = event => {
+  handleInputChange = ( event ) => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -41,18 +48,18 @@ class EditPost extends Component {
     });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = ( event ) => {
     event.preventDefault();
-    // const { id, title, category, body, author } = this.state;
-    // const data = {
-    //   id: id,
-    //   title: title,
-    //   body: body,
-    //   author: author,
-    //   category: category
-    // };
-    // this.props.sendEditPost(data, data.id);
-    // this.props.history.push("/");
+    const { id, title, category, body, author } = this.state;
+    const data = {
+      id: id,
+      title: title,
+      body: body,
+      author: author,
+      category: category
+    };
+    this.props.editPost(data, data.id);
+    this.props.history.push("/");
   };
 
   render() {
@@ -99,6 +106,4 @@ const mapStateToProps = ({ posts, categories }) => ({
   categories
 });
 
-export default connect(mapStateToProps, { /*sendEditPost,*/ getPost, fetchCategories })(
-  EditPost
-);
+export default connect(mapStateToProps, { editPost, getPost, fetchCategories })( EditPost );
